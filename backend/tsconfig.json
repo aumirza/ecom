@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2018",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "build", // Compiled Output Directory
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "typeRoots": [
+    "./global.d.ts",
+    "./src/types",
+    "./node_modules/@types"
+  ],
+  "include": [
+    "src/**/*.ts", // Every ts file inside src folder
+  ],
+}
