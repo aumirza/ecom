@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import marketPlaceIcon from "../assets/marketplace.png";
+import marketPlaceIcon from "../../assets/marketplace.png";
 
 export default function HeroSection() {
   return (
