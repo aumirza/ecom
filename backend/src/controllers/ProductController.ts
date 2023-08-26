@@ -12,7 +12,10 @@ class ProductController {
         },
       ],
     });
-    return res.json({ products });
+    return res.json({
+      success: true,
+      products,
+    });
   }
 
   async show(req: Request, res: Response) {

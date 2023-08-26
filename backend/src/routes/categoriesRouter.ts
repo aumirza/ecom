@@ -8,7 +8,8 @@ const categoriesRouter = Router();
 const upload = multer({ storage: storage }).single("image");
 
 categoriesRouter.get("/", CategoryController.index);
-categoriesRouter.get("/:id", CategoryController.show);
+categoriesRouter.get("/:slug", CategoryController.show);
+// categoriesRouter.get(":id/products", CategoryController.showProducts);
 categoriesRouter.post("/", upload, CategoryController.addCategory);
 categoriesRouter.put("/:id", upload, CategoryController.update);
 

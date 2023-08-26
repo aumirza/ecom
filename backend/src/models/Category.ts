@@ -20,10 +20,12 @@ class Category extends Model {
         name: {
           type: DataTypes.STRING(128),
           allowNull: false,
+          unique: true,
         },
         description: {
           type: DataTypes.STRING(255),
-          allowNull: false,
+          allowNull: true,
+          defaultValue: "",
         },
         image: {
           type: DataTypes.STRING(255),
@@ -60,11 +62,27 @@ class Category extends Model {
   //   });
   // }
 
-  // static async getCategoryById(id: number) {
-  //   return await Category.findByPk(id, {
-  //     include: ["products"],
-  //   });
-  // }
+  static async getCategoryBySlug(slug: string) {
+    return await Category.findOne({
+      where: {
+        slug,
+      },
+      include: ["products"],
+    });
+  }
+
+  static async getCategoryById(id: number) {
+    return await Category.findByPk(id, {
+      include: ["products"],
+      // include: [
+      //   {
+      //     model: models.Product,
+      //     as: "products",
+      //     attributes: ["name", "price", "description", "quantity"],
+      //   },
+      // ],
+    });
+  }
 }
 
 export default Category;

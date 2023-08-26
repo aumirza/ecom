@@ -7,8 +7,8 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 const router = express.Router();
 
 router.use("/auth", authRouter);
-router.use(authMiddleware);
 router.use("/products", productsRouter);
 router.use("/categories", categoriesRouter);
+router.use(authMiddleware);
 
 export default router;

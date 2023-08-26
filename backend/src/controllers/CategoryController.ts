@@ -4,29 +4,36 @@ import { slugify } from "../utils";
 
 class CategoryController {
   async index(req: Request, res: Response) {
+    const { plucked } = req.query;
+    if (plucked) {
+      const categories = await models.Category.findAll({
+        attributes: ["id", "name", "slug"],
+      });
+      return res.json({
+        success: true,
+        categories,
+      });
+    }
     const categories = await models.Category.findAll();
-    return res.json({ categories });
+
+    return res.json({
+      success: true,
+      categories,
+    });
   }
   async show(req: Request, res: Response) {
-    const { id } = req.params;
-    const category = await models.Category.findByPk(id, {
-      include: [
-        {
-          model: models.Product,
-          as: "products",
-          attributes: ["name", "price", "description", "quantity"],
-        },
-      ],
-    });
-
+    const { slug } = req.params;
+    const category = await models.Category.getCategoryBySlug(slug);
     if (!category) {
       return res.status(404).json({
         success: false,
-        message: "Category not found",
+        error: "Category not found",
       });
     }
-
-    return res.json({ category });
+    return res.json({
+      success: true,
+      category,
+    });
   }
 
   async update(req: Request, res: Response) {
@@ -78,10 +85,10 @@ class CategoryController {
 
   async addCategory(req: Request, res: Response) {
     const { name, description } = req.body;
-    if (!name || !description)
+    if (!name)
       return res.status(400).json({
         success: false,
-        message: "Please enter all fields",
+        message: "Please enter name",
       });
     try {
       // Create a new product object
